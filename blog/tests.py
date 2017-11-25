@@ -3,14 +3,17 @@ Unit test our blog app.
 """
 
 from django.test import TestCase
+from django.urls import resolve
+from blog.views import home_page
 
 class SmokeTest(TestCase):
     """
     Deliberately failing test to initiate our testing.
     """
 
-    def test_smoke_failure(self):
+    def test_root_url_resolves_home(self):
         """
-        Test that deliberately fails.
+        Test that the root URL resolves to the home page.
         """
-        self.fail("We must write our tests!")
+        found = resolve('/')
+        self.assertEqual(found.func, home_page)
