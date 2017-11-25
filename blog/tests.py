@@ -1,5 +1,8 @@
 """
 Unit test our blog app.
+
+Note: Django's Test Clien already tests for URL resolution among other things,
+which means we don't need to test for super simple exceptions such as that.
 """
 
 from django.test import TestCase
@@ -7,22 +10,14 @@ from django.urls import resolve
 from django.http import HttpRequest
 from blog.views import home_page
 
-class SmokeTest(TestCase):
+class HomePageView(TestCase):
     """
-    Deliberately failing test to initiate our testing.
+    Suite of unit tests that test our Home page view.
     """
 
-    def test_root_url_resolves_home(self):
+    def test_home_uses_correct_html(self):
         """
-        Test that the root URL resolves to the home page.
+        Test that the home page is rendering the correct HTML template.
         """
-        found = resolve('/')
-        self.assertEqual(found.func, home_page)
-
-    def test_home_page_returns_response(self):
-        """
-        Test that the home page is returning a successful HTTP response.
-        """
-        request = HttpRequest()
-        response = home_page(request)
-        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
