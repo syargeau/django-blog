@@ -1,23 +1,41 @@
 """
 Unit test our blog app.
 
-Note: Django's Test Clien already tests for URL resolution among other things,
-which means we don't need to test for super simple exceptions such as that.
+Note: Django's Test Client already tests for URL resolution, which means
+we don't need to test for this. YAYYYY!!!
 """
 
+from unittest.mock import patch
 from django.test import TestCase
-from django.urls import resolve
 from django.http import HttpRequest
 from blog.views import home_page
 
-class HomePageView(TestCase):
+
+class HomePageViewTest(TestCase):
     """
     Suite of unit tests that test our Home page view.
     """
 
-    def test_home_uses_correct_html(self):
+    @patch('blog.views.Article')
+    def test_gets_post_data(self, mock_article):
         """
-        Test that the home page is rendering the correct HTML template.
+        Test that the view gets published article data.
         """
-        response = self.client.get('/')
-        self.assertTemplateUsed(response, 'home.html')
+        request = HttpRequest()
+        home_page(request)
+        mock_article.objects.get.assert_called_once_with(published=True)
+
+    @patch('blog.views.Article')
+    @patch('blog.views.render')
+    def test_renders_html(self, mock_render, mock_article):
+        """
+        Test that the view renders the home HTML with the associated post data.
+        """
+        request = HttpRequest()
+        response = home_page(request)
+        self.assertEqual(response, mock_render.return_value)
+        mock_render.assert_called_once_with(
+            request,
+            'home.html',
+            {'article': mock_article.objects.get()}
+        )
