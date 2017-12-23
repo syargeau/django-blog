@@ -5,25 +5,27 @@ Note: Django's Test Client already tests for URL resolution, which means
 we don't need to test for this. YAYYYY!!!
 """
 
+import unittest
 from unittest.mock import patch
-from django.test import TestCase
+
 from django.http import HttpRequest
+
 from blog.views import home_page
 
 
-class HomePageViewTest(TestCase):
+class HomePageViewTest(unittest.TestCase):
     """
     Suite of unit tests that test our Home page view.
     """
 
     @patch('blog.views.Article')
-    def test_gets_post_data(self, mock_article):
+    def test_gets_article_data(self, mock_article):
         """
         Test that the view gets published article data.
         """
         request = HttpRequest()
         home_page(request)
-        mock_article.objects.get.assert_called_once_with(published=True)
+        mock_article.get_page_articles.assert_called_once_with(page=1)
 
     @patch('blog.views.Article')
     @patch('blog.views.render')
@@ -37,5 +39,5 @@ class HomePageViewTest(TestCase):
         mock_render.assert_called_once_with(
             request,
             'home.html',
-            {'article': mock_article.objects.get()}
+            {'article': mock_article.get_page_articles()}
         )
