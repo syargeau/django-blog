@@ -12,4 +12,4 @@ def home_page(request):
     Renders the view for our home page.
     """
     articles = Article.get_articles(page=1)
-    return render(request, 'home.html', {'article': articles})
+    return render(request, 'home.html', {'articles': articles})

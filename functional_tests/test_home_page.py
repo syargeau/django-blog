@@ -49,12 +49,15 @@ class BasicHomePageTest(LiveServerTestCase):
         # Bob logs into Moto Now Blog, the best site ever! He notices it's title.
         desired_title = 'Moto Now Blog'
         self.assertEqual(self.browser.title, desired_title)
-        # Bob sees the title of the 10 most recent posts on the home page.
+        # Bob sees 10 articles
+        articles = self.browser.find_elements_by_class_name('article')
+        self.assertEqual(len(articles), 10)
+        # He notices the titles of them correspond to the most recent articles in
+        # descending date order.
         # Note: in our test case, these articles are given the numbered titles 1-11,
-        # so the most recent ones will be 2-11.
-        page_text = self.browser.find_element_by_tag_name('body').text
-        for article in range(2, 12):
-            self.assertIn(f'Test Article {article}', page_text)
-        self.assertNotIn('Test Article 1', page_text)
+        # so the most recent ones will be 2-11, with 11 being the first.
+        for article, article_number in zip(articles, range(11, 1, -1)):
+            expected_title = f'Test Article {article_number}'
+            self.assertEqual(article.text, expected_title)
         # Continue testing...
         self.fail('Finish all tests first!')

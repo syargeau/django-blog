@@ -7,5 +7,10 @@
 
     <body>
         <h1>Welcome to Moto Now!</h1>
+
+        {% for article in articles %}
+            <h4 class="article">{{ article.title }}</h4>
+        {% endfor %}
+
     </body>
 </html>
