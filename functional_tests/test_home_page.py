@@ -43,7 +43,8 @@ class BasicHomePageTest(LiveServerTestCase):
 
     def test_load_home_page(self):
         """
-        Test that the home page loads as expected (i.e. with title and header).
+        Test that the home page loads as expected (i.e. with
+        title and header).
         """
         self.browser.get(self.live_server_url)
         # Bob logs into Moto Now Blog, the best site ever! He notices it's title.
@@ -59,5 +60,21 @@ class BasicHomePageTest(LiveServerTestCase):
         for article, article_number in zip(articles, range(11, 1, -1)):
             expected_title = f'Test Article {article_number}'
             self.assertEqual(article.text, expected_title)
+
+    def test_pagination(self):
+        """
+        Test for a button to click on next 10 articles, and ensure
+        that this loads the next 10 articles with the proper URL.
+        """
+        self.browser.get(self.live_server_url)
+        # Bob notices a button to go to the "next" page
+        next_button = self.browser.find_element_by_id('next-page-button')
+        self.assertEqual(next_button.text, 'Next Page')
+        # He clicks the button, and it loads the next most recent articles
+        
+        # This time, he notices a button to go to both the "previous" and "next" page
+
+        # He goes the final page, and notices the "next" option is no longer present
+
         # Continue testing...
         self.fail('Finish all tests first!')
