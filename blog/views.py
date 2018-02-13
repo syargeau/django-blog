@@ -1,5 +1,6 @@
 """
-These functions govern how HTTP requests are rendered! Woohoo... this is the meat.
+These functions govern how HTTP requests are rendered!
+Woohoo... this is the meat.
 """
 
 from django.shortcuts import render

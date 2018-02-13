@@ -55,7 +55,7 @@ class HomePageViewTest(unittest.TestCase):
         mock_render.assert_called_once_with(
             request,
             'home.html',
-            {'article': mock_article.get_articles()}
+            {'articles': mock_article.get_articles()}
         )
 
 
