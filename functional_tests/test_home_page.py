@@ -47,8 +47,8 @@ class BasicHomePageTest(LiveServerTestCase):
         title and header).
         """
         self.browser.get(self.live_server_url)
-        # Bob logs into Moto Now Blog, the best site ever! He notices it's title.
-        desired_title = 'Moto Now Blog'
+        # Bob logs into Django Blog, the best Django blog engine ever! He notices it's title.
+        desired_title = 'Django Blog'
         self.assertEqual(self.browser.title, desired_title)
         # Bob sees 10 articles
         articles = self.browser.find_elements_by_class_name('article')
