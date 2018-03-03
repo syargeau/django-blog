@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'motonowblog.urls'
+ROOT_URLCONF = 'djangoblog.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'motonowblog.wsgi.application'
+WSGI_APPLICATION = 'djangoblog.wsgi.application'
 
 
 # Database
