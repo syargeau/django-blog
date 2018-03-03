@@ -1,9 +1,9 @@
-# Moto Now Django Blog Engine
-What is our goal with this project? Primarily, we are creating a simple blog engine in Django (with plans to open source). Afterwards, we can transform our current site (www.motonowblog.com) to use this engine, hence making it easier to expand our site with future projects down the road (a.k.a. no more restrictions from Wordpress capabilities!)
+# Django Blog Engine
+What is my goal with this project? Primarily, I am creating a simple blog engine in Django for open-source use. Afterwards, I can transform my current site (www.motonowblog.com) to use this engine, hence making it easier to expand the site with future projects down the road (a.k.a. no more restrictions from Wordpress capabilities!)
 ## Getting Started
-Biggest thing to note: this is an in-progress project! At any time in the development process we might have failing functional tests in the Master branch (yep, not an ideal use of Git, but this is just for fun! Cringe away).
+Biggest thing to note: this is an in-progress project! At any time in the development process I might have failing functional tests in the Master branch (yep, not an ideal use of Git, but this is just for fun! Cringe away).
 ### Containerize Using Docker
-We want to fully containerize our project using Docker so that it's easy to deploy to a live staging and production server. We are still figuring out the best way to develop within Docker... so stay tuned! (more Docker instructions to come).
+I want to fully containerize this project using Docker so that it's easy to deploy to a live staging and production server. I am still figuring out the best way to develop within Docker... so stay tuned! (more Docker instructions to come).
 ### Development
 At the very least, we can ignore Docker for now and get started locally. That will require the user to manually install Python 3.6, Django, and Selenium at the very least.
 Once these are installed, we can develop tests and see our site in progress through the provided Django `mangage.py`.
