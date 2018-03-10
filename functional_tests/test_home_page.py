@@ -3,8 +3,11 @@ End to end functional tests that test the integration of the home page
 from the users viewpoint.
 """
 
+import time
+
 from django.test import LiveServerTestCase
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 from blog.models import Article
 
@@ -21,8 +24,8 @@ class BasicHomePageTest(LiveServerTestCase):
         testing database.
         """
         super().setUpClass()
-        num_articles = 11
-        for article in range(1, (num_articles + 1)):
+        cls.num_articles = 21
+        for article in range(1, (cls.num_articles + 1)):
             Article.objects.create(
                 title=f'Test Article {article}',
                 body=f'Test body content {article}',
@@ -56,8 +59,8 @@ class BasicHomePageTest(LiveServerTestCase):
         # He notices the titles of them correspond to the most recent articles in
         # descending date order.
         # Note: in our test case, these articles are given the numbered titles 1-11,
-        # so the most recent ones will be 2-11, with 11 being the first.
-        for article, article_number in zip(articles, range(11, 1, -1)):
+        # so the most recent ones will be 12-21, with 21 being the first.
+        for article, article_number in zip(articles, range(self.num_articles, 1, -1)):
             expected_title = f'Test Article {article_number}'
             self.assertEqual(article.text, expected_title)
 
@@ -67,13 +70,19 @@ class BasicHomePageTest(LiveServerTestCase):
         that this loads the next 10 articles with the proper URL.
         """
         self.browser.get(self.live_server_url)
-        # Bob notices a button to go to the "next" page
-        next_button = self.browser.find_element_by_id('next-page-button')
-        self.assertEqual(next_button.text, 'Next Page')
-        # He clicks the button, and it loads the next most recent articles
-        
+        # Bob notices a link to go to the "next page"
+        next_page_link = self.browser.find_element_by_link_text('Next Page')
+        desired_link_url = self.live_server_url + '/page/2/'
+        self.assertEqual(desired_link_url, next_page_link.get_attribute('href'))
+        # He notices that there is no "previous page" link
+        with self.assertRaises(NoSuchElementException):
+            self.browser.find_element_by_link_text('Previous Page')
+        # He clicks the link to go to the next page, and it loads the next most recent articles
+        next_page_link.click()
+        time.sleep(3)
         # This time, he notices a button to go to both the "previous" and "next" page
-
+        self.browser.find_element_by_link_text('Next Page')
+        self.browser.find_element_by_link_text('Previous Page')
         # He goes the final page, and notices the "next" option is no longer present
 
         # Continue testing...
